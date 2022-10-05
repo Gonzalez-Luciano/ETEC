@@ -87,7 +87,7 @@ class ConsultaAlumnos():
 
     def estilos(self):#Estilos de la App   
         self.style = ttk.Style()
-        self.style.theme_create ("estilo_tb",parent="default",settings={
+        self.style.theme_create ("estilo_tb",parent="clam",settings={
             "TNotebook": {"configure": {"tabmargins": [2, 5, 2, 0],"background": "#FFFFFF"} },
             "TNotebook.Tab": {
                 "configure": {"padding": [5, 1], "background": "#FFFFFF" },
@@ -101,15 +101,25 @@ class ConsultaAlumnos():
 
 
     def MasterGuardarDatos(self, masterGuarda):#Funcion para crear interfaz grafica de la pestaña Guardar
-        self.buscarImagen=tk.PhotoImage(file="C:/Users/TuKK/Desktop/programaEscuela/imagenesApp/boton-busqueda2.png")
+        self.buscarImagen=tk.PhotoImage(file="imagenesApp/boton-busqueda2.png")
         self.titulo=tk.Label(masterGuarda,text="Información General")
         self.titulo.config(bg="#8CD0F7", font=("Arial", 20))
         self.titulo.grid(row=0, column=3,columnspan=6,pady=10)
         # self.textoEjemplo= tk.StringVar()
         # self.textoEjemplo.set("Nombre de Alumno")
         self.entryBuscador=tk.Entry(masterGuarda)
-        self.entryBuscador.insert(0," Nombre del Alumno")
+        self.entryBuscador.insert(0," Buscar")
         self.entryBuscador.grid(row=1,column=0,pady=5)
+        #Función para crear y borrar el pre-texto de entryBuscador
+        def on_enter(e):
+            self.entryBuscador.delete(0, 'end')
+        
+        def on_leave(e):
+            alumn=self.entryBuscador.get()
+            if alumn=='':
+                self.entryBuscador.insert(0, ' Buscar')
+        self.entryBuscador.bind('<FocusIn>', on_enter)
+        self.entryBuscador.bind('<FocusOut>', on_leave)
         self.buttonBuscador=ttk.Button(masterGuarda,image=self.buscarImagen,command=self.buscar, cursor="hand2")
         self.buttonBuscador.grid(row=1,column=1,pady=5)
         self.notAlumno=tk.Entry(masterGuarda)

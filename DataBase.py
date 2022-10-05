@@ -23,10 +23,19 @@ class DataBase:
         self.connection = pymysql.connect(
             host="localhost",
             user="root",
-            password="admin",
-            db="prueba"
+            db="test"
         )
         self.cursor = self.connection.cursor()
+        
+    # def crear_alumno(self,alumnoCuil,alumnoNombre,alumnoApellido):
+    #     sql="INSERT INTO alumnos (idAlumno, nombreAlumno, apellidoAlumno) VALUES ('{}', '{}', '{}')".format(alumnoCuil, alumnoNombre, alumnoApellido)
+    #         # ultimoId = len(self.__class__.lista)
+    #         # self.__class__.lista.append( Alumno(str(ultimoId), alumnCompleto))
+    #     try:
+    #         self.cursor.execute(sql)
+    #         self.connection.commit()
+    #     except Exception as e:
+    #         raise
 
-
+    
 database = DataBase()

@@ -1,5 +1,3 @@
-from cProfile import label
-from re import X
 import tkinter as tk
 from tkinter import Toplevel, messagebox
 from tkinter import ttk
@@ -33,7 +31,7 @@ def signin():
     elif username != 'admin':
         messagebox.showerror("Invalid", "Invalid username")   
     
-img = tk.PhotoImage(file='C:/Users/PC2/Desktop/login.png')
+img = tk.PhotoImage(file='C:/Users/TuKK/Desktop/programaEscuela/login.png')
 tk.Label(root, image=img, bg='white').place(x=50, y=50)
 
 frame=tk.Frame(root, width=350, height=350, bg="white")
@@ -49,12 +47,12 @@ def on_enter(e):
 def on_leave(e):
     name=user.get()
     if name=='':
-        user.inser(0, 'Username')
+        user.insert(0, 'Usuario')
         
         
 user = tk.Entry(frame, width=25, fg='black', border=0, bg="white", font=('Microsoft Yahei UI Light', 11))
 user.place(x=30, y=80)
-user.insert(0, 'Username')
+user.insert(0, 'Usuario')
 user.bind('<FocusIn>', on_enter)
 user.bind('<FocusOut>', on_leave)
 
@@ -70,13 +68,13 @@ def on_leave(e):
     name=code.get()
     if name=='':
         code.config(show="")
-        code.inser(0, 'Password')
+        code.insert(0, 'Contraseña')
         
         
 code = tk.Entry(frame, width=25, fg='black', border=0, bg="white", font=('Microsoft Yahei UI Light', 11))
 #show="*"
 code.place(x=30, y=150)
-code.insert(0, 'Password')
+code.insert(0, 'Contraseña')
 code.bind('<FocusIn>', on_enter)
 code.bind('<FocusOut>', on_leave)
 

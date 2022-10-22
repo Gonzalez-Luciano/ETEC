@@ -1,14 +1,9 @@
 import pymysql
-import DataBase
+from DataBase import DataBase
 
-class dbPrfesores():
-     def __init__(self):
-        self.connection = pymysql.connect(
-            host="localhost",
-            user="root",
-            db="test",
-        )
-        self.cursor = self.connection.cursor()
+class dbPrfesores(DataBase):
+     def __init__(self,hostdb,userdb,db):
+        super().__init__(hostdb,userdb,db)
 
      def crear_profesor(self,cuilProfesor,nombreProfesor,apellidoProfesor,correoProfesor):
             sql="INSERT INTO profesores (idProfesor, nombreProfesor, apellidoProfesor, correoProfesor) VALUES ('{}', '{}', '{}','{}')".format(cuilProfesor, nombreProfesor, apellidoProfesor,correoProfesor)
@@ -19,3 +14,5 @@ class dbPrfesores():
                 self.connection.commit()
             except Exception as e:
                 raise
+
+database=dbPrfesores("localhost","root","test")

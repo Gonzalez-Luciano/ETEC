@@ -19,11 +19,14 @@ nombre: VarChar:50
 Año:Varchar)"""
 
 class DataBase:
-    def __init__(self):
+    def __init__(self,hostdb,userdb,db):
+        self.hostdb = hostdb
+        self.userdb = userdb
+        self.db = db
         self.connection = pymysql.connect(
-            host="localhost",
-            user="root",
-            db="test"
+            host= hostdb,
+            user= userdb,
+            db= db
         )
         self.cursor = self.connection.cursor()
         
@@ -38,4 +41,4 @@ class DataBase:
     #         raise
 
     
-database = DataBase()
+

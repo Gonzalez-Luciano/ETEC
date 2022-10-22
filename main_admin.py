@@ -3,9 +3,9 @@ from tkinter import Label, ttk, END
 from tkinter import messagebox,Menubutton
 from Alumno import *
 import re
-from DataBase import DataBase
 from dbAlumnos import dbAlumnos
 from dbProfesores import dbPrfesores
+from dbMaterias import dbMaterias
 
 class ConsultaAlumnos():
     #Ejemplos de nombres para los alumnos 
@@ -311,9 +311,10 @@ class ConsultaAlumnos():
         self.descripEntrymateria.bind('<FocusOut>', on_leave)
         self.descripEntrymateria.place(x=320,y=196)
         tk.Frame(masterCarga, width=300, height=3, bg='#8CD0F7').place(x=315, y=226)
-        self.botonNuevaMateria=tk.Button(masterCarga,width=20, pady=7, text='Cargar Materia', bg='#57a1f8', fg='white', border=0, cursor='hand2', activebackground='#8cb9ed')
+        self.botonNuevaMateria=tk.Button(masterCarga,command=self.GuardarNuevaMateria,width=20, pady=7, text='Cargar Materia', bg='#57a1f8', fg='white', border=0, cursor='hand2', activebackground='#8cb9ed')
         self.botonNuevaMateria.place(x=680,y=370)
 
+#<---------------------------------------VENTANA DE INICIO------------------------------------------------------->
     def VentanaInicio(self,masterCarga):
         #Funcion para que aparesca la ventana cargar profesor 
         def abrirVentanaProfesor():
@@ -382,12 +383,13 @@ class ConsultaAlumnos():
         # elif self.comboboxHorario.get()=="Tarde":
         #     comboboxSeleccion="tarde"
         # else:pass
-        database= dbAlumnos()
+        database= dbAlumnos("localhost","root","test")
         try:
-            if nombreAlumn != "Nombre" or "" and apellidoAlumn != "Apellido" or "":
-                int(cuilAlumn)
-                database.crear_alumno(cuilAlumn,nombreAlumn,apellidoAlumn)
-                messagebox.showinfo("","Alumno Cargado con Exito")
+            if nombreAlumn != "Nombre" and apellidoAlumn != "Apellido":
+                if nombreAlumn != "" and apellidoAlumn != "":
+                    int(cuilAlumn)
+                    database.crear_alumno(cuilAlumn,nombreAlumn,apellidoAlumn)
+                    messagebox.showinfo("","Alumno Cargado con Exito")
             else:
                 messagebox.showerror("Error de entrada de Alumno","Falta un Nombre o Apellido")
         except ValueError:
@@ -416,7 +418,7 @@ class ConsultaAlumnos():
         # else:pass
         print(correoProfesor)
         print(es_correo_valido(correoProfesor))
-        database= dbPrfesores()
+        database= dbPrfesores("localhost","root","test")
         try:
             int(cuilProfesor)
             if nombreProfesor != "Nombre" and apellidoProfesor != "Apellido" and cuilProfesor != "Cuil" and correoProfesor != "Correo" and es_correo_valido(correoProfesor) == True:
@@ -432,5 +434,13 @@ class ConsultaAlumnos():
         #     self.__class__.lista.append( Alumno(str(ultimoId), profesorCompleto))
         # else:
         #     messagebox.showerror("Error de entrada de Profesor","Falta un Nombre o Apellido")
-        
+    def GuardarNuevaMateria(self):
+        nombreMateria=self.nombreEntryMateria.get().strip()
+        descripMateria=self.descripEntrymateria.get().strip()
+        database= dbMaterias("localhost","root","test")
+        if nombreMateria != "Nombre" and descripMateria != "Descripción":
+            if nombreMateria != "" and descripMateria != "":
+                database.crear_materia(nombreMateria,descripMateria)
+        else:
+            messagebox.showerror("Error de entrada de Materia","Falta un Nombre o Descripción")
 aplicacion1 = ConsultaAlumnos()

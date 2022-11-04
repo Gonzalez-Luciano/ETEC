@@ -46,18 +46,18 @@ class ConsultaAlumnos():
         14: {"nombre" : "Samantha Delgado", "turno" : "tarde"},
     }'''
     lista = []
-    lista.append( Alumno("0", "Luciano González", "tarde") )
-    lista.append( Alumno("1", "Juan Jose", "manana") )
-    lista.append( Alumno("2", "Samantha Delgado", "tarde") )
-    lista.append( Alumno("3", "Alex Granado", "manana") )
-    lista.append( Alumno("4", "Michelle Ramirez", "tarde") )
-    lista.append( Alumno("5", "Natalia Alonso", "manana") )
-    lista.append( Alumno("6", "Anthony Soto", "tarde") )
-    lista.append( Alumno("7", "Fernando Domínquez", "manana") )
-    lista.append( Alumno("8", "María Paula Jasso", "tarde") )
-    lista.append( Alumno("9", "Paz Gómez", "manana") )
-    lista.append( Alumno("10", "Magdalena Garrido", "tarde") )
-    lista.append( Alumno("11", "Maximiliano Crespo", "manana") )
+    # lista.append( Alumno("0", "Luciano González", "tarde") )
+    # lista.append( Alumno("1", "Juan Jose", "manana") )
+    # lista.append( Alumno("2", "Samantha Delgado", "tarde") )
+    # lista.append( Alumno("3", "Alex Granado", "manana") )
+    # lista.append( Alumno("4", "Michelle Ramirez", "tarde") )
+    # lista.append( Alumno("5", "Natalia Alonso", "manana") )
+    # lista.append( Alumno("6", "Anthony Soto", "tarde") )
+    # lista.append( Alumno("7", "Fernando Domínquez", "manana") )
+    # lista.append( Alumno("8", "María Paula Jasso", "tarde") )
+    # lista.append( Alumno("9", "Paz Gómez", "manana") )
+    # lista.append( Alumno("10", "Magdalena Garrido", "tarde") )
+    lista.append( Alumno(1,32324 , "Juan","jose",True) )
     def __init__(self):
         
         self.ventana1 = tk.Tk()

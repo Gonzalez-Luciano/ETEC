@@ -1,32 +1,14 @@
+from dataclasses import *
 
+@dataclass
 class Profesor():
-
-    NombreUsuario = ""
-    Contrasena = ""
-    Materia= ""
-
-    def __init__(self, nombreUsuario, contrasena, materia):
-        self.NombreUsuario = nombreUsuario
-        self.Contrasena = contrasena
-        self.Materia = materia
-
-    def GetNombreUsuario(self):
-        return self.NombreUsuario
-
-    def GetContrasena(self):
-        return self.Contrasena
-
-    def GetMateria(self):
-        return self.Materia
-
-    def  SetNombreUsuario(self,idalumno):
-        self.NombreUsuario= idalumno  
-    
-    def  SetContrasena(self,nombre):
-        self.Contrasena= nombre 
-
-    def  SetMateria(self,turno):
-        self.Materia= turno  
+    id: int
+    cuil: int
+    nombre: str
+    apellido: str
+    mail: str
+    active: bool    
 
     def MostrarProfesor(self):
-        return  "Usuario: " + self.NombreUsuario + ", Contraseña: " + self.Contrasena + ", Materia: " + self.Materia
+        return  f"Id: {self.id}\nUsuario: {self.nombre} {self.apellido}\nCuil:{self.cuil}\nMail: {self.mail}\nactivo: {self.active} "
+    

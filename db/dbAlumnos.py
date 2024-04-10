@@ -1,9 +1,10 @@
 import pymysql
 from db.DataBase import DataBase
+import cryptography
 
 class dbAlumnos(DataBase):
-    def __init__(self,hostdb,userdb,db):
-        super().__init__(hostdb,userdb,db)
+    def __init__(self,hostdb,userdb,db,password):
+        super().__init__(hostdb,userdb,db,password)
 
     def crear_alumno(self,cuilAlumn,nombreAlumn,apellidoAlumn):
         sql="INSERT INTO alumnos (idAlumno,cuilAlumno, nombreAlumno, apellidoAlumno,active) VALUES (NULL,'{}', '{}', '{}','1')".format(cuilAlumn, nombreAlumn, apellidoAlumn)
@@ -29,6 +30,7 @@ class dbAlumnos(DataBase):
 
         try:
             self.cursor.execute(sql)
+            print(self.cursor)
             self.connection.commit()
         except Exception as e:
             raise
@@ -42,4 +44,3 @@ class dbAlumnos(DataBase):
         except Exception as e:
             raise
         
-database = dbAlumnos("localhost","root","test")

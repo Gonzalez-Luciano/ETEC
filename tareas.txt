@@ -1,4 +1,0 @@
-crear tabla roles(idRol, nombreRol)
-crear tabla directivos y admin
-agregar columna fk de idRol en alumnos y profesores
-crear login y limitar app segun rol

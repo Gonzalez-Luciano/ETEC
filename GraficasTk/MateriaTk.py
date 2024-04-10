@@ -3,6 +3,8 @@ from tkinter import Label, Widget, ttk, END
 from tkinter import messagebox,Menubutton
 from Materia import *
 from db.dbMaterias import dbMaterias
+from db.dbAlumno_Materia import dbAlumno_Materia
+from db.dbProfesor_Materia import dbProfesor_Materia
 
 
 class MateriaTk():
@@ -74,7 +76,7 @@ class MateriaTk():
                     self.entryBuscadorBMMateria.insert(0, ' Buscar')
             self.entryBuscadorBMMateria.bind('<FocusIn>', on_enter)
             self.entryBuscadorBMMateria.bind('<FocusOut>', on_leave)
-            self.buttonBuscadorMateria=tk.Button(masterGuarda,image=self.buscarImagenMateria,width=25,height=25,bg='#57a1f9', fg='white', border=0, cursor='hand2', activebackground='#8cb9ed')
+            self.buttonBuscadorMateria=tk.Button(masterGuarda,image=self.buscarImagenMateria,command=self.buscarMateria,width=25,height=25,bg='#57a1f9', fg='white', border=0, cursor='hand2', activebackground='#8cb9ed')
             self.buttonBuscadorMateria.place(x=206,y=76)
             
             #Scrollbar , Listbox y Combobox
@@ -120,20 +122,44 @@ class MateriaTk():
             self.descripcionEntryBMMateria.bind('<FocusOut>', on_leave)
             self.descripcionEntryBMMateria.place(x=390,y=196)
             tk.Frame(masterGuarda, width=300, height=3, bg='#8CD0F7').place(x=385, y=226)
+            
+            
+    #Función para buscar a la materia por el nombre
+    def buscarMateria(self):
+            nombre = self.entryBuscadorBMMateria.get().strip()
+            print(nombre)
+            try:
+                for index in range(self.listboxBMMateria.size()):
+                    materiaBuscada = self.listamaterias[index].nombre
+                    self.listboxBMMateria.selection_clear(0, tk.END)
+                    if nombre == materiaBuscada:
+                        self.listboxBMMateria.selection_set(index)
+                        return
+                else:
+                    self.entryBuscadorBMMateria.delete(0,'end')
+                    self.entryBuscadorBMMateria.insert(0,' Buscar')
+                    messagebox.showinfo("","No se encontro la materia")
+            except Exception as e:
+                messagebox.showerror("","Error de Entrada")
 #<-----------------------Función para guardar nuevas materias en base de datos (más info en dbMaterias.py)----------------------->
     def GuardarNuevaMateria(self):
         nombreMateria=self.nombreEntryMateria.get().strip()
         descripMateria=self.descripcionEntryMateria.get().strip()
-        database= dbMaterias("localhost","root","test")
+        database= dbMaterias("localhost","EtecUser","tkinterdatabase","1234")
         if nombreMateria != "Nombre" and descripMateria != "Descripción":
             if nombreMateria != "" and descripMateria != "":
                 database.crear_materia(nombreMateria,descripMateria)
                 messagebox.showinfo("","Materia Cargada con Exito")
                 self.cargar_listamaterias()
+                self.cargar_comboxmaterias()
+                self.evento_clickMostrarMateria()
+                self.cargar_comboxmateriasProfesores()
+                self.evento_clickMostrarMateria_Profesor()
                 self.nombreEntryMateria.delete(0,'end')
                 self.descripcionEntryMateria.delete(0,'end')
                 self.nombreEntryMateria.insert(0, 'Nombre')
                 self.descripcionEntryMateria.insert(0, 'Descripción')
+                
         else:
             messagebox.showerror("Error de entrada de Materia","Falta un Nombre o Descripción")
    
@@ -143,16 +169,21 @@ class MateriaTk():
         descripMateria=self.descripcionEntryBMMateria.get().strip()
         if selector != ():
             idMateria = self.listamaterias[selector[0]].id
-            database= dbMaterias("localhost","root","test")
+            database= dbMaterias("localhost","EtecUser","tkinterdatabase","1234")
             if nombreMateria != "Nombre" and descripMateria != "Descripción":
                 if nombreMateria != "" and descripMateria != "":
                     database.actualizar_materia(nombreMateria,descripMateria,idMateria)
                     messagebox.showinfo("","Materia actualizada con Exito")
+                    self.cargar_listamaterias()
+                    self.cargar_comboxmaterias()
+                    self.evento_clickMostrarMateria()
+                    self.cargar_comboxmateriasProfesores()
+                    self.evento_clickMostrarMateria_Profesor()
                     self.nombreEntryBMMateria.delete(0,'end')
                     self.descripcionEntryBMMateria.delete(0,'end')
                     self.nombreEntryBMMateria.insert(0, 'Nombre')
                     self.descripcionEntryBMMateria.insert(0, 'Descripción')
-                    self.cargar_listamaterias()
+                    
             else:
                 messagebox.showerror("Error de entrada de Materia","Falta un Nombre o Descripción")
         else:
@@ -167,18 +198,24 @@ class MateriaTk():
             respuesta = messagebox.askyesno(title='confirmacion',
                     message=f'¿Estas seguro de querer borrar la materia: {self.listamaterias[index].nombre} ?')
             if respuesta:
-                database = dbMaterias("localhost","root","test")
+                database = dbMaterias("localhost","EtecUser","tkinterdatabase","1234")
                 idMateria = self.listamaterias[index].id
                 database.baja_materia(idMateria)
                 self.nombreEntryBMMateria.delete(0,'end')
                 self.descripcionEntryBMMateria.delete(0,'end')
                 self.nombreEntryBMMateria.insert(0, 'Nombre')
                 self.descripcionEntryBMMateria.insert(0, 'Descripción')
+                dbAlumno_Materia("localhost","EtecUser","tkinterdatabase","1234").bajaPorMateria(idMateria)
+                dbProfesor_Materia("localhost","EtecUser","tkinterdatabase","1234").bajaPorMateria(idMateria)
                 self.cargar_listamaterias()
+                self.cargar_comboxmaterias()
+                self.evento_clickMostrarMateria()
+                self.cargar_comboxmateriasProfesores()
+                self.evento_clickMostrarMateria_Profesor()
             else:
                 return
         else:
-            messagebox.showerror("","Seleccione a un profesor")
+            messagebox.showerror("","Seleccione a una materia")
     
     
     def evento_clickMateria(self,event):
@@ -194,7 +231,7 @@ class MateriaTk():
             
     def cargar_listamaterias(self):
         self.listboxBMMateria.delete(0, tk.END)
-        materias = dbMaterias("localhost","root","test").buscar_listamateria()
+        materias = dbMaterias("localhost","EtecUser","tkinterdatabase","1234").buscar_listamateria()
         self.listamaterias=[]
         index=0
         for materia in materias:

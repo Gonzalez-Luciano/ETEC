@@ -1,12 +1,13 @@
 import pymysql
 from db.DataBase import DataBase
+import cryptography
 
 class dbMaterias(DataBase):
-    def __init__(self,hostdb,userdb,db):
-        super().__init__(hostdb,userdb,db)
+    def __init__(self,hostdb,userdb,db,password):
+        super().__init__(hostdb,userdb,db,password)
 
     def crear_materia(self,nombreMateria,descripMateria):
-        sql="INSERT INTO materias (idMateria, nombreMateria, descripciónMateria,active) VALUES (NULL, '{}', '{}',1)".format(nombreMateria, descripMateria)
+        sql="INSERT INTO materias (idMateria, nombreMateria, descripcionMateria,active) VALUES (NULL, '{}', '{}',1)".format(nombreMateria, descripMateria)
                 # ultimoId = len(self.__class__.lista)
                 # self.__class__.lista.append( Alumno(str(ultimoId), alumnCompleto))
         try:
@@ -27,7 +28,7 @@ class dbMaterias(DataBase):
     
     
     def actualizar_materia(self,nombreMateria, descripMateria,idMateria):
-        sql="UPDATE materias SET nombreMateria = '{}', descripciónMateria = '{}' WHERE idMateria = '{}'".format(nombreMateria, descripMateria, idMateria)
+        sql="UPDATE materias SET nombreMateria = '{}', descripcionMateria = '{}' WHERE idMateria = '{}'".format(nombreMateria, descripMateria, idMateria)
 
         try:
             self.cursor.execute(sql)
@@ -45,4 +46,3 @@ class dbMaterias(DataBase):
         except Exception as e:
             raise
             
-database = dbMaterias("localhost","root","test")

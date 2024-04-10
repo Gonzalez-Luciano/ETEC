@@ -8,8 +8,10 @@ class Alumno():
     apellido: str
     active: bool    
 
-    def MostrarAlumno(self):
-        return  f"Id: {self.id}\nUsuario: {self.nombre} {self.apellido}\nCuil:{self.cuil}\nActivo: {self.active} "
+
+
+
+
 
         
 
